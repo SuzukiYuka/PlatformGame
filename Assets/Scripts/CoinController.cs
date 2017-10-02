@@ -9,6 +9,7 @@ public class CoinController : MonoBehaviour {
     public Text coinLabel;
 
     public void GetCoin() {
+        player.GetComponent<AudioSource>().Play();
         player.coinCount++;
         coinLabel.text = "コイン×" + player.coinCount.ToString();
     }
