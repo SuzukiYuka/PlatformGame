@@ -35,6 +35,8 @@ public class Player : MonoBehaviour {
     bool wallSliding;
     int wallDirX;
 
+    public int coinCount = 0;
+
     void Start() {
 
         controller = GetComponent<Controller2D>();

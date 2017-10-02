@@ -56,6 +56,12 @@ public class Controller2D : RaycastController {
 
             if (hit) {
 
+                if (hit.collider.CompareTag("Coin")) {
+                    CoinController coinController = hit.collider.GetComponent<CoinController>();
+                    coinController.GetCoin();
+                    Destroy(hit.collider.gameObject);
+                }
+
                 if (hit.collider.CompareTag("Through")) {
                     if (directionY == 1 || hit.distance == 0) {
                         continue;
@@ -117,6 +123,11 @@ public class Controller2D : RaycastController {
             Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
             if (hit) {
+                if (hit.collider.CompareTag("Coin")) {
+                    CoinController coinController = hit.collider.GetComponent<CoinController>();
+                    coinController.GetCoin();
+                    Destroy(hit.collider.gameObject);
+                }
 
                 if (hit.distance == 0) {
                     continue;
@@ -200,7 +211,6 @@ public class Controller2D : RaycastController {
     void SlideDownMaxSlope(RaycastHit2D hit, ref Vector2 moveAmount) {
         if (hit) {
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-            Debug.Log("slope:" + slopeAngle + "max" + maxSlopeAngle);
             if (slopeAngle > maxSlopeAngle) {
 
                 moveAmount.x = Mathf.Sign(hit.normal.x) * (Mathf.Abs(moveAmount.y) - hit.distance) / Mathf.Tan(slopeAngle * Mathf.Deg2Rad);
