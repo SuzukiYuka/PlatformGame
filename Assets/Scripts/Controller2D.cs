@@ -9,7 +9,8 @@ public class Controller2D : RaycastController {
     float maxDescendAngle = 75f;
 
     public CollisionInfo collisions;
-    Vector2 playerInput;
+    [HideInInspector]
+    public Vector2 playerInput;
 
     public override void Start() {
         base.Start();
