@@ -5,7 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class Player : MonoBehaviour {
 
-    public float jumpHeight = 4f;
+    public float maxJumpHeight = 4f;
+    public float minJumpHeight = 1f;
+
     public float timeToJumpApex = 0.4f;
     float accelerationTimeAirborne = 0.2f;
     float accelerationGrounded = 0.1f;
@@ -20,7 +22,9 @@ public class Player : MonoBehaviour {
     float timeToWallUnstick;
 
     float gravity;
-    float jumpVelocity;
+    float maxJumpVelocity;
+    float minJumpVelocity;
+
     Vector3 velocity;
 
     float velocityXSmoothing;
@@ -31,9 +35,11 @@ public class Player : MonoBehaviour {
 
         controller = GetComponent<Controller2D>();
 
-        gravity = -(2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-        Debug.Log("G:" + gravity + " jump v:" + jumpVelocity);
+        gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+
+        Debug.Log("G:" + gravity + " jump v:" + maxJumpVelocity);
     }
 
     void Update() {
@@ -67,11 +73,8 @@ public class Player : MonoBehaviour {
             }
         }
 
-        if (controller.collisions.above || controller.collisions.below) {
-            velocity.y = 0;
-        }
-
         if (Input.GetKeyDown(KeyCode.Space)) {
+
             if (wallSliding) {
                 if (wallDirX == input.x) {
                     velocity.x = -wallDirX * wallJumpClimb.x;
@@ -86,12 +89,22 @@ public class Player : MonoBehaviour {
             }
 
             if (controller.collisions.below) {
-                velocity.y = jumpVelocity;
+                velocity.y = maxJumpVelocity;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            if (velocity.y > minJumpVelocity) {
+                velocity.y = minJumpVelocity;
             }
         }
 
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime, input);
+
+        if (controller.collisions.above || controller.collisions.below) {
+            velocity.y = 0;
+        }
     }
 
 }
