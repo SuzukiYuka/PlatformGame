@@ -123,10 +123,14 @@ public class Controller2D : RaycastController {
             Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
             if (hit) {
-                if (hit.collider.CompareTag("Coin")) {
+                if (hit.collider.CompareTag("Coin") && this.CompareTag("Player")) {
                     CoinController coinController = hit.collider.GetComponent<CoinController>();
                     coinController.GetCoin();
                     Destroy(hit.collider.gameObject);
+                }
+
+                if (hit.collider.CompareTag("Enemy") && this.CompareTag("Player")) {
+                    Debug.Log("GameOver");
                 }
 
                 if (hit.distance == 0) {
