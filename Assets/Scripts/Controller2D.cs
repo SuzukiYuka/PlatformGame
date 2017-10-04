@@ -16,6 +16,8 @@ public class Controller2D : RaycastController {
         collisions.faceDir = 1;
     }
 
+
+
     public void Move(Vector2 moveAmount, bool standingOnPlatform = false) {
         Move(moveAmount, Vector2.zero, standingOnPlatform);
     }
@@ -75,6 +77,14 @@ public class Controller2D : RaycastController {
                         collisions.fallingThroughPlatform = true;
                         Invoke("ResetFallingThroughPlatform", 0.5f);
                         continue;
+                    }
+                }
+
+                if (hit.collider.CompareTag("Key")) {
+
+                    if (Input.GetKeyUp(KeyCode.Return)) {
+                        KeyController keyController = hit.collider.GetComponent<KeyController>();
+                        keyController.LoadStage();
                     }
                 }
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
