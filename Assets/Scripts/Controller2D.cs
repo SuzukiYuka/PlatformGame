@@ -87,6 +87,12 @@ public class Controller2D : RaycastController {
                         keyController.LoadStage();
                     }
                 }
+
+                if (hit.collider.CompareTag("Goal")) {
+                    GoalController goalController = hit.collider.GetComponent<GoalController>();
+                    goalController.Goal();
+                }
+
                 moveAmount.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
@@ -141,6 +147,13 @@ public class Controller2D : RaycastController {
 
                 if (hit.collider.CompareTag("Enemy") && this.CompareTag("Player")) {
                     Debug.Log("GameOver");
+                }
+
+                if (hit.collider.CompareTag("Goal")) {
+                    GoalController goalController = hit.collider.GetComponent<GoalController>();
+                    if (!goalController.isGoal) {
+                        goalController.Goal();
+                    }
                 }
 
                 if (hit.distance == 0) {

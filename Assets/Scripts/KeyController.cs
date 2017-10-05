@@ -9,7 +9,10 @@ public class KeyController : MonoBehaviour {
 
     public void LoadStage() {
 
-        SceneManager.LoadScene("Main");
+        if (keyName == "") {
+            keyName = "Main";
+        }
+        SceneManager.LoadScene(keyName);
     }
 
 

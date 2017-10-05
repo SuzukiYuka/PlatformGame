@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/StageSelect.unity
     guid: 9958fd200b2e545d682b752d7677ea67
+  - enabled: 1
+    path: Assets/Z.unity
+    guid: cc9e4f440f68047789faf73bf39f98be
