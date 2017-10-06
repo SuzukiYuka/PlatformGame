@@ -37,9 +37,12 @@ public class Player : MonoBehaviour {
 
     public int coinCount = 0;
 
+    Animator anim;
+
     void Start() {
 
         controller = GetComponent<Controller2D>();
+        anim = GetComponent<Animator>();
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
@@ -62,6 +65,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    void FixedUpdate() {
+        anim.SetFloat("Speed", Mathf.Abs(directionalInput.x));
+        anim.SetBool("IsGrounded", true);
+        anim.SetFloat("vSpeed", velocity.y);
+    }
     public void SetDirectionalInput(Vector2 input) {
         directionalInput = input;
     }

@@ -18,6 +18,7 @@ public class GoalController : MonoBehaviour {
     void Start() {
         cameraFollow = mainCamera.GetComponent<CameraFollow>();
         cameraComponent = mainCamera.GetComponent<Camera>();
+        cameraSize = cameraComponent.orthographicSize;
     }
 
     void Update() {
