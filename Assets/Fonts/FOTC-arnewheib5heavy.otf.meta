@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e3da0e88495464d129200437939e0864
+timeCreated: 1507378727
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FOTC-ARNewHeiB5
+  fontNames:
+  - FOTC-ARNewHeiB5
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class Controller2D : RaycastController {
 
@@ -13,16 +15,35 @@ public class Controller2D : RaycastController {
 
     public EnemyController enemyController;
 
+    public GameObject pausePanel;
+    public GameObject gameOverPanel;
+    public Button pauseButton;
+
+    bool isPause = false;
+
     public override void Start() {
         base.Start();
         collisions.faceDir = 1;
+        pausePanel.transform.localScale = Vector3.zero;
+        gameOverPanel.transform.localScale = Vector3.zero;
+        pauseButton.onClick.AddListener(pause);
     }
 
+    void pause() {
 
+        isPause = !isPause;
+
+        if (isPause) {
+            pausePanel.transform.DOScale(new Vector3(1, 1, 1), 0.5f).SetEase(Ease.InSine);
+        } else {
+            pausePanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InSine);
+        }
+    }
 
     public void Move(Vector2 moveAmount, bool standingOnPlatform = false) {
         Move(moveAmount, Vector2.zero, standingOnPlatform);
     }
+
     public void Move(Vector2 moveAmount, Vector2 input, bool standingOnPlatform = false) {
         UpdateRaycastOrigins();
         collisions.Reset();
@@ -72,6 +93,7 @@ public class Controller2D : RaycastController {
                         enemyController.AttackEnemy();
                     } else {
                         Debug.Log("GameOver");
+                        gameOverPanel.transform.DOScale(new Vector3(1, 1, 1), 1);
                     }
                 }
 
@@ -158,6 +180,7 @@ public class Controller2D : RaycastController {
 
                 if (hit.collider.CompareTag("Enemy") && this.CompareTag("Player")) {
                     Debug.Log("GameOver");
+                    gameOverPanel.transform.DOScale(new Vector3(1, 1, 1), 1);
                 }
 
                 if (hit.collider.CompareTag("Goal")) {
