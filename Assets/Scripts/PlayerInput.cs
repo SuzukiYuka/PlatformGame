@@ -10,16 +10,20 @@ public class PlayerInput : MonoBehaviour {
         player = GetComponent<Player>();
     }
     void Update() {
+        bool isPause = player.controller.isPause;
+        bool isGameOver = player.controller.isGameOver;
 
-        Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        player.SetDirectionalInput(directionalInput);
+        if (!isPause && !isGameOver) {
+            Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            player.SetDirectionalInput(directionalInput);
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            player.OnJumpInputDown();
-        }
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                player.OnJumpInputDown();
+            }
 
-        if (Input.GetKeyUp(KeyCode.Space)) {
-            player.OnJumpInputUp();
+            if (Input.GetKeyUp(KeyCode.Space)) {
+                player.OnJumpInputUp();
+            }
         }
     }
 

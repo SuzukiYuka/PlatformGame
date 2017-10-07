@@ -17,26 +17,34 @@ public class Controller2D : RaycastController {
 
     public GameObject pausePanel;
     public GameObject gameOverPanel;
-    public Button pauseButton;
+    //public Button pauseButton;
 
-    bool isPause = false;
+    public bool isPause = false;
+    public bool isGameOver = false;
 
     public override void Start() {
         base.Start();
         collisions.faceDir = 1;
         pausePanel.transform.localScale = Vector3.zero;
         gameOverPanel.transform.localScale = Vector3.zero;
-        pauseButton.onClick.AddListener(pause);
+        //pauseButton.onClick.AddListener(pause);
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            pause();
+        }
     }
 
     void pause() {
 
         isPause = !isPause;
-
-        if (isPause) {
-            pausePanel.transform.DOScale(new Vector3(1, 1, 1), 0.5f).SetEase(Ease.InSine);
-        } else {
-            pausePanel.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InSine);
+        if (!isGameOver) {
+            if (isPause) {
+                pausePanel.transform.DOScale(new Vector3(1, 1, 1), 0.4f).SetEase(Ease.InSine);
+            } else {
+                pausePanel.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine);
+            }
         }
     }
 
@@ -91,8 +99,9 @@ public class Controller2D : RaycastController {
                     if (directionY == -1) {
                         Destroy(hit.collider.gameObject);
                         enemyController.AttackEnemy();
-                    } else {
+                    } else if (!isGameOver) {
                         Debug.Log("GameOver");
+                        isGameOver = true;
                         gameOverPanel.transform.DOScale(new Vector3(1, 1, 1), 1);
                     }
                 }
@@ -172,14 +181,15 @@ public class Controller2D : RaycastController {
             Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
             if (hit) {
-                if (hit.collider.CompareTag("Coin") && this.CompareTag("Player")) {
+                if (hit.collider.CompareTag("Coin")) {
                     CoinController coinController = hit.collider.GetComponent<CoinController>();
                     coinController.GetCoin();
                     Destroy(hit.collider.gameObject);
                 }
 
-                if (hit.collider.CompareTag("Enemy") && this.CompareTag("Player")) {
+                if (hit.collider.CompareTag("Enemy") && !isGameOver) {
                     Debug.Log("GameOver");
+                    isGameOver = true;
                     gameOverPanel.transform.DOScale(new Vector3(1, 1, 1), 1);
                 }
 
