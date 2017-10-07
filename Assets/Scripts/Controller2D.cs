@@ -11,6 +11,8 @@ public class Controller2D : RaycastController {
     [HideInInspector]
     public Vector2 playerInput;
 
+    public EnemyController enemyController;
+
     public override void Start() {
         base.Start();
         collisions.faceDir = 1;
@@ -67,6 +69,7 @@ public class Controller2D : RaycastController {
                 if (hit.collider.CompareTag("Enemy")) {
                     if (directionY == -1) {
                         Destroy(hit.collider.gameObject);
+                        enemyController.AttackEnemy();
                     } else {
                         Debug.Log("GameOver");
                     }
