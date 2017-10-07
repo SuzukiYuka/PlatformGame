@@ -122,7 +122,7 @@ public class Controller2D : RaycastController {
                 if (slopeAngle != collisions.slopeAngle) {
                     moveAmount.x = (hit.distance - skinWidth) * directionX;
                     collisions.slopeAngle = slopeAngle;
-                    collisions.slopeNomal = hit.normal;
+                    collisions.slopeNormal = hit.normal;
                 }
             }
         }
@@ -195,7 +195,7 @@ public class Controller2D : RaycastController {
             moveAmount.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(moveAmount.x);
             collisions.below = true;
             collisions.climbingSlope = true;
-            collisions.slopeNomal = slopeNomal;
+            collisions.slopeNormal = slopeNomal;
         }
     }
 
@@ -227,7 +227,7 @@ public class Controller2D : RaycastController {
                             collisions.slopeAngle = slopeAngle;
                             collisions.descendingSlope = true;
                             collisions.below = true;
-                            collisions.slopeNomal = hit.normal;
+                            collisions.slopeNormal = hit.normal;
                         }
                     }
                 }
@@ -244,7 +244,7 @@ public class Controller2D : RaycastController {
 
                 collisions.slopeAngle = slopeAngle;
                 collisions.slidingDownMaxSlope = true;
-                collisions.slopeNomal = hit.normal;
+                collisions.slopeNormal = hit.normal;
             }
         }
     }
@@ -263,7 +263,7 @@ public class Controller2D : RaycastController {
         public bool slidingDownMaxSlope;
 
         public float slopeAngle, slopeAngleOld;
-        public Vector2 slopeNomal;
+        public Vector2 slopeNormal;
         public Vector2 moveAmountOld;
         public int faceDir;
         public bool fallingThroughPlatform;
@@ -274,7 +274,7 @@ public class Controller2D : RaycastController {
             climbingSlope = false;
             descendingSlope = false;
             slidingDownMaxSlope = false;
-            slopeNomal = Vector2.zero;
+            slopeNormal = Vector2.zero;
 
             slopeAngleOld = slopeAngle = 0;
         }

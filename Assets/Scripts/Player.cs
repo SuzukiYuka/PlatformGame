@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
 
         if (controller.collisions.above || controller.collisions.below) {
             if (controller.collisions.slidingDownMaxSlope) {
-                velocity.y += controller.collisions.slopeNomal.y * -gravity * Time.deltaTime;
+                velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;
             } else {
                 velocity.y = 0;
             }
@@ -67,9 +67,12 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate() {
         anim.SetFloat("Speed", Mathf.Abs(directionalInput.x));
-        anim.SetBool("IsGrounded", true);
         anim.SetFloat("vSpeed", velocity.y);
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Sign(directionalInput.x);
+        transform.localScale = scale;
     }
+
     public void SetDirectionalInput(Vector2 input) {
         directionalInput = input;
     }
@@ -91,9 +94,9 @@ public class Player : MonoBehaviour {
 
         if (controller.collisions.below) {
             if (controller.collisions.slidingDownMaxSlope) {
-                if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNomal.x)) {
-                    velocity.y = maxJumpVelocity * controller.collisions.slopeNomal.y;
-                    velocity.x = maxJumpVelocity * controller.collisions.slopeNomal.x;
+                if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x)) {
+                    velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+                    velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
                 }
             } else {
                 velocity.y = maxJumpVelocity;
