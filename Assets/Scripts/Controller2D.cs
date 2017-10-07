@@ -64,6 +64,14 @@ public class Controller2D : RaycastController {
                     Destroy(hit.collider.gameObject);
                 }
 
+                if (hit.collider.CompareTag("Enemy")) {
+                    if (directionY == -1) {
+                        Destroy(hit.collider.gameObject);
+                    } else {
+                        Debug.Log("GameOver");
+                    }
+                }
+
                 if (hit.collider.CompareTag("Through")) {
                     if (directionY == 1 || hit.distance == 0) {
                         continue;
@@ -186,7 +194,7 @@ public class Controller2D : RaycastController {
         }
     }
 
-    void ClimbSlope(ref Vector2 moveAmount, float slopeAngle, Vector2 slopeNomal) {
+    void ClimbSlope(ref Vector2 moveAmount, float slopeAngle, Vector2 slopeNormal) {
         float moveDistance = Mathf.Abs(moveAmount.x);
         float climbmoveAmountY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
 
@@ -195,7 +203,7 @@ public class Controller2D : RaycastController {
             moveAmount.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(moveAmount.x);
             collisions.below = true;
             collisions.climbingSlope = true;
-            collisions.slopeNormal = slopeNomal;
+            collisions.slopeNormal = slopeNormal;
         }
     }
 
