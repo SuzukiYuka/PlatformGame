@@ -10,6 +10,7 @@ public class StageController : MonoBehaviour {
     public GameObject pausePanel;
     public GameObject gameOverPanel;
     public GameObject clearPanel;
+    public GameObject startPanel;
 
     [HideInInspector]
     public bool isPause = false;
@@ -20,19 +21,27 @@ public class StageController : MonoBehaviour {
     public Button exitButton;
     public Button retryButton;
 
+    public Text countdownLabel;
+
     public Controller2D controller;
 
     public PlayerInput playerInput;
 
     public EnemyController enemyController;
 
+    int count = 3;
+
     void Start() {
+        playerInput.canInput = false;
         pausePanel.transform.localScale = Vector3.zero;
         gameOverPanel.transform.localScale = Vector3.zero;
         clearPanel.transform.localScale = Vector3.zero;
+
         resumeButton.onClick.AddListener(pause);
         retryButton.onClick.AddListener(retry);
         exitButton.onClick.AddListener(exit);
+        countdownLabel.text = count.ToString();
+        Invoke("CountDown", 1);
     }
 
     void Update() {
@@ -41,7 +50,23 @@ public class StageController : MonoBehaviour {
         }
     }
 
-    void exit() {
+    void CountDown() {
+        count -= 1;
+        if (count > 0) {
+            countdownLabel.text = count.ToString();
+            Invoke("CountDown", 1);
+        } else {
+            countdownLabel.text = "Start!";
+            Invoke("HideStartPanel", 1);
+        }
+    }
+
+    void HideStartPanel() {
+        startPanel.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine);
+        playerInput.canInput = true;
+    }
+
+    public void exit() {
         SceneManager.LoadSceneAsync("StageSelect");
     }
 

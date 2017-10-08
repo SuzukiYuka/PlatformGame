@@ -8,9 +8,9 @@ public class PlayerInput : MonoBehaviour {
     [HideInInspector]
     public bool canInput;
 
-    void Start() {
-        player = GetComponent<Player>();
+    void Awake() {
         canInput = true;
+        player = GetComponent<Player>();
     }
     void Update() {
 
