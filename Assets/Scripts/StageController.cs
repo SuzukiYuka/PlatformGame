@@ -9,6 +9,7 @@ public class StageController : MonoBehaviour {
 
     public GameObject pausePanel;
     public GameObject gameOverPanel;
+    public GameObject clearPanel;
 
     [HideInInspector]
     public bool isPause = false;
@@ -28,6 +29,7 @@ public class StageController : MonoBehaviour {
     void Start() {
         pausePanel.transform.localScale = Vector3.zero;
         gameOverPanel.transform.localScale = Vector3.zero;
+        clearPanel.transform.localScale = Vector3.zero;
         resumeButton.onClick.AddListener(pause);
         retryButton.onClick.AddListener(retry);
         exitButton.onClick.AddListener(exit);
@@ -59,6 +61,10 @@ public class StageController : MonoBehaviour {
                 pausePanel.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine);
             }
         }
+    }
+
+    public void ShowClearPanel() {
+        clearPanel.transform.DOScale(new Vector3(1, 1, 1), 0.2f).SetEase(Ease.InSine);
     }
 
 }
