@@ -5,15 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerInput : MonoBehaviour {
     Player player;
+    [HideInInspector]
+    public bool canInput;
 
     void Start() {
         player = GetComponent<Player>();
+        canInput = true;
     }
     void Update() {
-        bool isPause = player.controller.isPause;
-        bool isGameOver = player.controller.isGameOver;
-
-        if (!isPause && !isGameOver) {
+        Debug.Log(canInput);
+        if (canInput) {
             Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             player.SetDirectionalInput(directionalInput);
 

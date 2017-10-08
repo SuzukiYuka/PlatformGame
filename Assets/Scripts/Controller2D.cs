@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class Controller2D : RaycastController {
 
@@ -15,38 +16,14 @@ public class Controller2D : RaycastController {
 
     public EnemyController enemyController;
 
-    public GameObject pausePanel;
-    public GameObject gameOverPanel;
-    //public Button pauseButton;
-
-    public bool isPause = false;
-    public bool isGameOver = false;
-
     public override void Start() {
         base.Start();
         collisions.faceDir = 1;
-        pausePanel.transform.localScale = Vector3.zero;
-        gameOverPanel.transform.localScale = Vector3.zero;
-        //pauseButton.onClick.AddListener(pause);
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            pause();
-        }
-    }
 
-    void pause() {
 
-        isPause = !isPause;
-        if (!isGameOver) {
-            if (isPause) {
-                pausePanel.transform.DOScale(new Vector3(1, 1, 1), 0.4f).SetEase(Ease.InSine);
-            } else {
-                pausePanel.transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InSine);
-            }
-        }
-    }
+
 
     public void Move(Vector2 moveAmount, bool standingOnPlatform = false) {
         Move(moveAmount, Vector2.zero, standingOnPlatform);
@@ -99,10 +76,9 @@ public class Controller2D : RaycastController {
                     if (directionY == -1) {
                         Destroy(hit.collider.gameObject);
                         enemyController.AttackEnemy();
-                    } else if (!isGameOver) {
+                    } else if (!enemyController.isGameOver) {
                         Debug.Log("GameOver");
-                        isGameOver = true;
-                        gameOverPanel.transform.DOScale(new Vector3(1, 1, 1), 1);
+                        enemyController.gameOver();
                     }
                 }
 
@@ -187,10 +163,9 @@ public class Controller2D : RaycastController {
                     Destroy(hit.collider.gameObject);
                 }
 
-                if (hit.collider.CompareTag("Enemy") && !isGameOver) {
+                if (hit.collider.CompareTag("Enemy") && !enemyController.isGameOver) {
                     Debug.Log("GameOver");
-                    isGameOver = true;
-                    gameOverPanel.transform.DOScale(new Vector3(1, 1, 1), 1);
+                    enemyController.gameOver();
                 }
 
                 if (hit.collider.CompareTag("Goal")) {

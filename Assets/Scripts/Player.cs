@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
 
     float velocityXSmoothing;
 
+    [HideInInspector]
     public Controller2D controller;
 
     Vector2 directionalInput;
