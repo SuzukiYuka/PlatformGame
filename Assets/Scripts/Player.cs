@@ -70,7 +70,9 @@ public class Player : MonoBehaviour {
         anim.SetFloat("Speed", Mathf.Abs(directionalInput.x));
         anim.SetFloat("vSpeed", velocity.y);
         Vector3 scale = transform.localScale;
-        scale.x = Mathf.Sign(directionalInput.x);
+        if (directionalInput.x != 0) {
+            scale.x = Mathf.Sign(directionalInput.x);
+        }
         transform.localScale = scale;
     }
 
