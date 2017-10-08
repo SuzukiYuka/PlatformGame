@@ -106,7 +106,7 @@ public class Controller2D : RaycastController {
                     }
                 }
 
-                if (hit.collider.CompareTag("Goal")) {
+                if (hit.collider.CompareTag("Goal") && enemyController.enemyCount == 0) {
                     GoalController goalController = hit.collider.GetComponent<GoalController>();
                     goalController.Goal();
                 }
@@ -168,7 +168,7 @@ public class Controller2D : RaycastController {
                     enemyController.gameOver();
                 }
 
-                if (hit.collider.CompareTag("Goal")) {
+                if (hit.collider.CompareTag("Goal") && enemyController.enemyCount == 0) {
                     GoalController goalController = hit.collider.GetComponent<GoalController>();
                     if (!goalController.isGoal) {
                         goalController.Goal();

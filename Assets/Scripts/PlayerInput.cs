@@ -13,7 +13,7 @@ public class PlayerInput : MonoBehaviour {
         canInput = true;
     }
     void Update() {
-        Debug.Log(canInput);
+
         if (canInput) {
             Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             player.SetDirectionalInput(directionalInput);

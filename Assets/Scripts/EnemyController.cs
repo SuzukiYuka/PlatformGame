@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour {
 
     public Text enemyCountLabel;
-    int enemyCount = 0;
+    public int enemyCount = 0;
     public StageController stageController;
     [HideInInspector]
     public bool isGameOver;
