@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour {
 
     public Text enemyCountLabel;
     public GameObject panel;
+    float inPositionX;
+    float outPositionX;
     [HideInInspector]
     public int enemyCount = 0;
     public StageController stageController;
@@ -17,7 +19,9 @@ public class EnemyController : MonoBehaviour {
     public PlayerInput playerInput;
 
     void Awake() {
-        panel.transform.DOMoveX(700, 1);
+        inPositionX = panel.transform.position.x;
+        outPositionX = inPositionX + enemyCountLabel.rectTransform.rect.width;
+        panel.transform.DOMoveX(outPositionX, 1);
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
         enemyCountLabel.text = "あと" + enemyCount.ToString() + "体";
     }
@@ -29,7 +33,7 @@ public class EnemyController : MonoBehaviour {
         } else {
             enemyCountLabel.text = "あと" + enemyCount.ToString() + "体";
         }
-        panel.transform.DOMoveX(550, 1).SetEase(Ease.InOutSine);
+        panel.transform.DOMoveX(inPositionX, 1).SetEase(Ease.InOutSine);
         Invoke("hide", 2);
 
     }
@@ -41,7 +45,7 @@ public class EnemyController : MonoBehaviour {
     }
 
     void hide() {
-        panel.transform.DOMoveX(700, 1).SetEase(Ease.InSine);
+        panel.transform.DOMoveX(outPositionX, 1).SetEase(Ease.InSine);
     }
 
 }

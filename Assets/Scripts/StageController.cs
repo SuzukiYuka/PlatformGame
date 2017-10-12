@@ -89,7 +89,7 @@ public class StageController : MonoBehaviour {
     }
 
     public void ShowClearPanel() {
-        clearPanel.transform.DOScale(new Vector3(1, 1, 1), 0.2f).SetEase(Ease.InSine);
+        clearPanel.transform.DOScale(new Vector3(1, 1, 1), 0.4f).SetEase(Ease.InSine);
     }
 
 }

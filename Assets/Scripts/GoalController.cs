@@ -6,7 +6,7 @@ public class GoalController : MonoBehaviour {
 
     public GameObject mainCamera;
     public bool isGoal = false;
-    public float overCameraSize = 25f;
+    public float overCameraSize = 23f;
     public StageController stageController;
     float cameraSize;
     float deltaCameraSize;
